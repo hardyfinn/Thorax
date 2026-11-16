@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Thorax guide</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
+  body { font-family: Inter, "Helvetica Neue", Arial, sans-serif; color: #1d1b19; font-size: 10.2pt; line-height: 1.45; }
+  h1 { font-size: 26pt; letter-spacing: 0.08em; margin: 0 0 2mm; }
+  h1 span { font-size: 11pt; letter-spacing: 0; color: #8a6a24; font-weight: 600; margin-left: 4mm; }
+  h2 { font-size: 14pt; margin: 7mm 0 2mm; border-bottom: 2px solid #E2A93B; padding-bottom: 1mm; break-after: avoid; }
+  h3 { font-size: 11pt; margin: 4mm 0 1mm; break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .lede { font-size: 11pt; }
+  img.panel { width: 100%; border-radius: 2mm; margin: 3mm 0; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0; font-size: 9.2pt; }
+  th, td { text-align: left; vertical-align: top; padding: 1.3mm 2mm; border-bottom: 1px solid #ddd5c6; }
+  th { background: #f3ede2; }
+  tr { break-inside: avoid; }
+  td.k { font-weight: 700; white-space: nowrap; }
+  td.t { white-space: nowrap; color: #8a6a24; font-weight: 600; }
+  .grp td { background: #1d1b19; color: #f1e9da; font-weight: 700; letter-spacing: 0.06em; font-size: 8.6pt; }
+  .note { background: #f7f1e6; border-left: 3px solid #E2A93B; padding: 2mm 3mm; margin: 3mm 0; }
+  ol, ul { margin: 1mm 0 1mm 5mm; padding-left: 3mm; }
+  li { margin: 0.6mm 0; }
+  .cols { display: flex; gap: 6mm; }
+  .cols > div { flex: 1; }
+  code { background: #f3ede2; padding: 0 1mm; border-radius: 1mm; font-size: 9pt; }
+  .pb { break-before: page; }
+</style>
+</head>
+<body>
+
+<h1>THORAX <span>labelled T-1 companion for VCV Rack</span></h1>
+<p class="lede">Thorax is an 8-track algorithmic sequencer that works like the Torso T-1, with one difference: every control has its own knob with its name written on it. Under each knob, in amber, is where that control lives on the T-1. So when you learn a move in Thorax, you also know which knob to turn on the hardware (and whether to hold <b>CTRL</b>).</p>
+
+<img class="panel" src="../panel-preview.png" alt="Thorax panel">
+
+<h2>How it is organised</h2>
+<ul>
+  <li><b>One set of knobs, eight tracks.</b> Press a <b>TRACK</b> button (1 to 8) and the knobs jump to that track's settings. Turning a knob changes only that track. This is exactly how the T-1 works with its track pads.</li>
+  <li><b>The screen</b> shows the track you're editing, the knob you just turned with its value (for choice knobs like GROOVE or SCALE it shows the name), and the track's step pattern: amber cells are hits, with a line under the step that's playing.</li>
+  <li><b>Hover any knob</b> for a tooltip that says what it does and where it is on the T-1.</li>
+  <li><b>Outputs per track:</b> GATE, PITCH (V/OCT) and VEL (velocity, 0 to 10 V). When a track plays chords, GATE and PITCH become polyphonic: one channel per chord note. Plug PITCH into a poly oscillator, or use VCV's Split to take notes out one at a time.</li>
+  <li><b>MUTE</b> buttons silence a track's gate while it keeps running, so it comes back in time.</li>
+</ul>
+
+<h2>Five-minute start</h2>
+<ol>
+  <li>Patch track 1 GATE into a kick drum, track 2 GATE into a snare or clap, track 3 GATE into a hi-hat. Out of the box, track 1 plays four on the floor, track 2 plays a backbeat and track 3 plays 7 hits over 16 steps.</li>
+  <li>Patch track 4 PITCH into a poly oscillator (VCV VCO, or Bogaudio, Surge...) and track 4 GATE into a poly envelope and VCA. Track 4 plays three-note chords in C minor.</li>
+  <li>RUN is on, TEMPO is 120. To follow Ableton or another clock, patch sixteenth-note pulses into <b>CLOCK</b>, and use <b>RESET</b> to line up bar 1. For MIDI clock (24 per beat), change the setting in the right-click menu.</li>
+  <li>Press TRACK 3, turn <b>PULSES</b> and watch the pattern on the screen redistribute. Then turn <b>ROTATE</b> to slide it. That's the heart of the T-1.</li>
+  <li>Press TRACK 2, set <b>REPEATS</b> to 3 and <b>TIME</b> to 1/32 for a snare roll at the end of each hit. Turn <b>PACE</b> left to make it bounce.</li>
+</ol>
+
+<h2>Every control, and where it is on the T-1</h2>
+<p>"CTRL + X" means: on the T-1, hold the <b>CTRL</b> pad and turn knob X. Thorax gives those hidden second functions knobs of their own.</p>
+<table>
+<tr><th>Thorax</th><th>On the T-1</th><th>What it does, in plain words</th></tr>
+<tr class="grp"><td colspan="3">RHYTHM: which steps play</td></tr>
+<tr><td class="k">STEPS</td><td class="t">STEPS</td><td>How many steps in one cycle of the pattern (1 to 64). 16 = one bar of sixteenths.</td></tr>
+<tr><td class="k">PULSES</td><td class="t">PULSES</td><td>How many hits in the cycle. Thorax spreads them as evenly as it can (a euclidean rhythm): 4 of 16 is four on the floor; 3 of 8 is the tresillo; 5 of 16 and 7 of 16 give classic syncopated grooves.</td></tr>
+<tr><td class="k">ROTATE</td><td class="t">CTRL + PULSES</td><td>Slides the hits along the steps so the pattern starts from a different place. Same hits, different feel: 4 of 16 rotated by 2 plays the offbeats.</td></tr>
+<tr><td class="k">LENGTH</td><td class="t">LENGTH</td><td>Restarts the pattern after this many steps, even part way through a cycle. Off (the default) means it never restarts. STEPS 7 with LENGTH 16 gives a 7-step pattern that still resets every bar.</td></tr>
+<tr><td class="k">DIVIDE</td><td class="t">DIVISION</td><td>How long one step lasts. 1/16 is normal; 1/8 plays the track at half speed, 1/32 at double speed. 1/3, 1/6, 1/12, 1/24 and 1/48 are triplets.</td></tr>
+<tr><td class="k">CHANCE</td><td class="t">CTRL + VELOCITY</td><td>The chance that each hit actually plays. 100% plays every hit; 60% drops about four in ten. The T-1 calls this probability.</td></tr>
+<tr class="grp"><td colspan="3">FEEL: how loud, how long, how late</td></tr>
+<tr><td class="k">VELOCITY</td><td class="t">VELOCITY</td><td>How loud the notes are. Comes out of VEL as 0 to 10 V: patch it to a VCA level or a drum's accent input.</td></tr>
+<tr><td class="k">ACCENT</td><td class="t">ACCENT</td><td>How strongly the GROOVE shape is applied. At 0 every note is the same. At 100% the accented notes stay at full VELOCITY and the others drop to a quarter.</td></tr>
+<tr><td class="k">GROOVE</td><td class="t">CTRL + ACCENT</td><td>Which notes get the accent: <i>Downbeats</i> (steps 1, 5, 9, 13), <i>First hit</i> of each cycle, <i>Offbeats</i> (steps 3, 7, 11, 15), <i>Every other</i> hit, <i>Rise</i> (quiet to loud across the cycle), <i>Fall</i>, <i>Arch</i> (loudest in the middle) or <i>Random</i>.</td></tr>
+<tr><td class="k">SUSTAIN</td><td class="t">SUSTAIN</td><td>How long each gate stays open, in steps. Short for plucks and drums; above 1 for notes that overlap into the next step.</td></tr>
+<tr><td class="k">SWING</td><td class="t">TIMING</td><td>Pushes every second step late. 50% is straight, about 58% is a gentle house swing, 66% is a triplet shuffle, 75% is hard.</td></tr>
+<tr><td class="k">DELAY</td><td class="t">CTRL + TIMING</td><td>Plays the whole track late by part of a step. A little makes a part sit behind the beat; give two hat tracks slightly different delays for flams.</td></tr>
+<tr class="grp"><td colspan="3">REPEATS: extra notes after each hit</td></tr>
+<tr><td class="k">REPEATS</td><td class="t">REPEATS</td><td>How many extra notes follow each hit (0 to 16): ratchets, rolls, echoes. A new hit always cuts off repeats that haven't played yet, as on the T-1.</td></tr>
+<tr><td class="k">TIME</td><td class="t">TIME</td><td>The gap between repeats, as a note length: 1/32 is a fast roll, 1/8 a slow echo, triplet values give swung rolls.</td></tr>
+<tr><td class="k">PACE</td><td class="t">CTRL + TIME</td><td>Turn left and the repeats speed up like a bouncing ball. Turn right and they slow down. In the middle they're evenly spaced.</td></tr>
+<tr><td class="k">RAMP</td><td class="t">CTRL + REPEATS</td><td>Turn left and the repeats fade out; turn right and they build up. Makes rolls sound like echoes, or crescendos.</td></tr>
+<tr class="grp"><td colspan="3">RANDOM: controlled wobble</td></tr>
+<tr><td class="k">RANDOM</td><td class="t">RANDOM</td><td>Adds random variation to pitch (up to a scale octave either way, always in key) and to velocity. A little gives a human, wandering feel.</td></tr>
+<tr><td class="k">RATE</td><td class="t">CTRL + RANDOM</td><td>How often the random value changes: every note, or held for 2, 4, 8, 16 or 32 notes. Slow rates make the line shift in phrases rather than jitter.</td></tr>
+<tr class="grp"><td colspan="3">PITCH: notes, chords and melody</td></tr>
+<tr><td class="k">PITCH</td><td class="t">PITCH</td><td>The track's note, in semitones above ROOT, snapped to the SCALE. 0 is the root at 0 V (C4 with ROOT C); -12 is an octave down. On the T-1 you play notes in on the pads; here it's one knob.</td></tr>
+<tr><td class="k">HARMONY</td><td class="t">CTRL + PITCH</td><td>Moves the note up or down the <i>scale</i> rather than by semitones, so a chord changes from minor to major and back as it moves, the way chords do in a key.</td></tr>
+<tr><td class="k">VOICING</td><td class="t">VOICING</td><td>How many chord notes (1 to 8), built by stacking every other note of the scale: 3 gives a triad, 4 a seventh chord. 1 means single notes.</td></tr>
+<tr><td class="k">STYLE</td><td class="t">CTRL + VOICING</td><td>How the chord plays. <i>Chord</i>: all notes at once. <i>Chord build</i>: the first hit is one note, and each repeat adds a note. <i>Chord climb</i>: each repeat flips the chord into a higher inversion. <i>Arp per hit</i>: one chord note per hit, cycling. <i>Arp up</i>: the hit and its repeats walk up the chord. <i>Arp climb</i>: the walk keeps going up through three octaves. Chord build, Chord climb, Arp up and Arp climb change across the repeats, so they need REPEATS above 0.</td></tr>
+<tr><td class="k">RANGE</td><td class="t">RANGE</td><td>How far PHRASE moves the notes, in scale steps. 0 means no phrase. Negative values turn the shape upside down.</td></tr>
+<tr><td class="k">PHRASE</td><td class="t">CTRL + RANGE</td><td>The melody shape laid over the track, spread over four cycles of the pattern. Four cadences step the whole track through a chord progression, one chord per cycle (with RANGE at +7 they land exactly: I-IV-V-I, I-vi-IV-V, ii-V-I-I, I-V-vi-IV). Four LFO shapes (Triangle, Saw, Sine, Square) sweep the notes up and back.</td></tr>
+<tr class="grp"><td colspan="3">KEY and CLOCK</td></tr>
+<tr><td class="k">SCALE</td><td class="t">SCALE</td><td>The scale every note snaps to: chromatic, major, minor, dorian, phrygian, lydian, mixolydian, harmonic minor, major and minor pentatonic. Set per track, like the T-1.</td></tr>
+<tr><td class="k">ROOT</td><td class="t">CTRL + SCALE</td><td>The key's home note, C to B.</td></tr>
+<tr><td class="k">TEMPO</td><td class="t">TEMPO</td><td>The internal tempo (24 to 280 BPM). Ignored when CLOCK is patched.</td></tr>
+<tr><td class="k">RUN</td><td class="t">PLAY</td><td>Start and stop. Starting always begins from step 1. If the RUN jack is patched, a high gate there runs and a low gate stops.</td></tr>
+<tr><td class="k">RESET</td><td class="t">(none)</td><td>Sends every track back to step 1. The RESET jack does the same.</td></tr>
+<tr><td class="k">DICE</td><td class="t">(hold RANDOM)</td><td>Throws random values at the selected track's pulses, rotation, repeats, pace, accent, groove and phrase. A quick way to find a starting point. The T-1 does something similar when you hold RANDOM and turn knobs.</td></tr>
+<tr><td class="k">TRACK 1 to 8</td><td class="t">pads 1 to 16</td><td>Choose which track the knobs edit. The small amber light flashes when that track plays.</td></tr>
+<tr><td class="k">MUTE</td><td class="t">MUTE + pad</td><td>Silence a track's gate. Its pattern keeps running.</td></tr>
+</table>
+
+<h3>Jacks along the bottom</h3>
+<p><b>CLOCK</b> in: sixteenth-note pulses by default (24, 48 or 96 per beat in the right-click menu). <b>RESET</b> in: back to step 1. <b>RUN</b> in: a gate that runs and stops. <b>TRANSP</b> in: V/OCT transposition for all tracks, which stays in each track's scale (patch a chord root from the Hapax or Weighted here). <b>CLK</b> out: sixteenths, whether Thorax is following the internal tempo or an outside clock.</p>
+
+<h2>Recipes</h2>
+<div class="cols"><div>
+<h3>Detroit drum track</h3>
+<p>Track 1 kick: 4 of 16. Track 2 clap: 2 of 16, ROTATE 4. Track 3 closed hat: 4 of 16, ROTATE 2 (offbeats), SWING 58%. Track 4 open hat: 7 of 16, CHANCE 70%, ACCENT 60%, GROOVE Offbeats. Track 5 rim: 5 of 16, ROTATE 3, REPEATS 1, TIME 1/32, DELAY 10%.</p>
+<h3>Chord stabs with echoes</h3>
+<p>One track: PULSES 3 of 16, VOICING 4, STYLE Chord, SUSTAIN 0.3, REPEATS 2, TIME 1/8 triplet (1/12), RAMP -60%. Add PHRASE I-vi-IV-V with RANGE +7 so the stabs change chord every bar.</p>
+</div><div>
+<h3>Bouncing arps</h3>
+<p>PULSES 2 of 16, VOICING 3, STYLE Arp climb, REPEATS 6, TIME 1/16, PACE -60%. Each hit throws a ball of notes up the chord, speeding up. Turn HARMONY to move the chord through the key.</p>
+<h3>Self-mutating line (Autechre-ish)</h3>
+<p>STEPS 13 against a 16-step kick, PULSES 5, LENGTH 32 so it resets every two bars. PHRASE Sine, RANGE +5, RANDOM 30%, RATE every 8. CHANCE 80%. The line keeps drifting against the bar but never loses the downbeat.</p>
+</div></div>
+
+<h2>Where Thorax differs from the T-1</h2>
+<div class="note">
+<p>Thorax is a learning companion, not a clone. The T-1 manual describes what each control is for, but not the exact maths behind it, so a few behaviours are Thorax's own reading of it. In particular, the exact spacing of repeats with PACE, the cadence and LFO shapes, the chord styles and the accent shapes may sound a little different from the hardware. The <i>idea</i> each knob controls, and where to find it on the T-1, is the same.</p>
+</div>
+<ul>
+  <li>8 tracks instead of 16. Patch two Thoraxes for more.</li>
+  <li>No per-step editing, pattern banks, cycles (the T-1's per-cycle automation) or MIDI. Use VCV's own preset menu to save patterns.</li>
+  <li>Thorax outputs CV and gates. To drive MIDI gear, use VCV's CV-MIDI module, or send the gates and pitches out through the disting NT.</li>
+  <li>The T-1 enters a track's notes on the pads; Thorax uses a PITCH knob and the TRANSP input.</li>
+</ul>
+
+<h2>Right-click menu</h2>
+<ul>
+  <li><b>CLOCK input pulses per beat:</b> 4 (sixteenths), 24 (MIDI clock), 48 or 96.</li>
+  <li><b>Copy this track's settings to all tracks</b>, <b>Reset this track's knobs to default</b>, <b>Silence this track</b>.</li>
+</ul>
+</body>
+</html>

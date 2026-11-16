@@ -410,7 +410,7 @@ struct ThoraxDisplay : Widget {
 	void drawLayer(const DrawArgs& args, int layer) override {
 		if (layer != 1) return;
 		NVGcolor amber = nvgRGB(0xE2, 0xA9, 0x3B), cream = nvgRGB(0xF1, 0xE9, 0xDA), dim = nvgRGB(0x3A, 0x33, 0x2A);
-		std::shared_ptr<Font> font = APP->window->loadFont(asset::system("res/fonts/ShareTechMono-Regular.ttf"));
+		std::shared_ptr<window::Font> font = APP->window->loadFont(asset::system("res/fonts/ShareTechMono-Regular.ttf"));
 		float w = box.size.x, h = box.size.y;
 		nvgBeginPath(args.vg);
 		nvgRoundedRect(args.vg, 0, 0, w, h, 3);
