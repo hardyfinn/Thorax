@@ -7,7 +7,7 @@ static void defaults(float* p) {
 	float d[NUM_TP] = {16, 4, 0, 0, 7, 1, 0.8f, 0, 0, 0.5f, 0.5f, 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0};
 	for (int i = 0; i < NUM_TP; i++) p[i] = d[i];
 }
-static void run(Engine& e, int ti, double sixteenths, const char* title) {
+static void run(Sequencer& e, int ti, double sixteenths, const char* title) {
 	printf("--- %s\n", title);
 	e.reset();
 	const double sr = 1000.0, per16 = 0.125;   // 120 bpm, 1 kHz test rate
@@ -27,7 +27,7 @@ static void run(Engine& e, int ti, double sixteenths, const char* title) {
 	}
 }
 int main() {
-	Engine e;
+	Sequencer e;
 	for (int t = 0; t < NUM_TRACKS; t++) { defaults(e.p[t]); e.p[t][TP_PULSES] = 0; }
 	float* p = e.p[0];
 	defaults(p);

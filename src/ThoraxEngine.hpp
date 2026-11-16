@@ -151,7 +151,7 @@ inline int chordToneDegrees(int scale, int k) {
 	return 2 * k;
 }
 
-struct Event {
+struct NoteEvent {
 	double t;              // when, in 16ths
 	double len;            // gate length, in 16ths
 	float vel;             // 0..1
@@ -163,7 +163,7 @@ struct Track {
 	long lastStep = -1;    // absolute step counter since reset
 	long hits = 0;         // notes played since reset
 	static const int QN = 24;
-	Event q[QN];
+	NoteEvent q[QN];
 	int qn = 0;
 	// gate output state
 	bool gate = false;
@@ -182,7 +182,7 @@ struct Track {
 	}
 };
 
-struct Engine {
+struct Sequencer {
 	Track tracks[NUM_TRACKS];
 	float p[NUM_TRACKS][NUM_TP] = {};
 	bool mute[NUM_TRACKS] = {};
@@ -272,7 +272,7 @@ struct Engine {
 		}
 	}
 
-	void push(Track& tr, const Event& e) {
+	void push(Track& tr, const NoteEvent& e) {
 		if (tr.qn < Track::QN) tr.q[tr.qn++] = e;
 	}
 
@@ -314,7 +314,7 @@ struct Engine {
 		double r = std::pow(2.0, tp[TP_PACE] * 0.5);
 		double t = t0;
 		for (int e = 0; e <= reps; e++) {
-			Event ev;
+			NoteEvent ev;
 			ev.t = t;
 			double ivl = std::max(1.0 / 32, interval);
 			ev.len = reps > 0 ? std::min(sus, ivl * 0.9) : sus;
@@ -348,7 +348,7 @@ struct Engine {
 			// fire due events (queue is in time order)
 			int fired = 0;
 			while (fired < tr.qn && tr.q[fired].t <= pos + 1e-9) {
-				const Event& e = tr.q[fired];
+				const NoteEvent& e = tr.q[fired];
 				if (tr.gate) tr.retrig = retrigSamples;
 				tr.gate = true;
 				tr.gateEnd = e.t + e.len;

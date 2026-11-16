@@ -79,7 +79,7 @@ struct Thorax : Module {
 		NUM_LIGHTS
 	};
 
-	Engine engine;
+	thorax::Sequencer engine;
 	int selected = 0;
 	float prev[NUM_PARAMS] = {};
 	int lastTouched = -1;        // param shown on the screen
@@ -247,7 +247,7 @@ struct Thorax : Module {
 	}
 
 	void dice() {
-		Rng& r = engine.rng;
+		thorax::Rng& r = engine.rng;
 		auto pick = [&](int lo, int hi) { return (float) (lo + (int) (r.uniform() * (hi - lo + 1) - 1e-9)); };
 		int n = (int) std::round(params[TP_STEPS].getValue());
 		params[TP_PULSES].setValue(pick(1, std::max(1, n * 3 / 4)));
@@ -326,7 +326,7 @@ struct Thorax : Module {
 
 		// outputs
 		for (int t = 0; t < NUM_TRACKS; t++) {
-			Track& tr = engine.tracks[t];
+			thorax::Track& tr = engine.tracks[t];
 			bool g = engine.gateOut(t) && running;
 			int ch = std::max(1, tr.voices);
 			outputs[GATE_OUTPUT + t].setChannels(ch);
@@ -361,7 +361,7 @@ struct Thorax : Module {
 				touchAge = 0.f;
 			}
 			for (int t = 0; t < NUM_TRACKS; t++) {
-				Track& tr = engine.tracks[t];
+				thorax::Track& tr = engine.tracks[t];
 				lights[HIT_LIGHT + t].setBrightness(tr.flash);
 				tr.flash = std::max(0.f, tr.flash - dt * 8.f);
 				lights[SELECT_LIGHT + t].setBrightness(t == selected ? 1.f : 0.f);
