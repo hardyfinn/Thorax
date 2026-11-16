@@ -1,0 +1,23 @@
+{
+  "slug": "Thorax",
+  "name": "Thorax",
+  "version": "2.0.0",
+  "license": "GPL-3.0-or-later",
+  "brand": "Haer",
+  "author": "Haer",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "https://github.com/hardyfinn/Thorax",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "Thorax",
+      "name": "Thorax",
+      "description": "8-track algorithmic sequencer in the spirit of the Torso T-1, with every control on its own labelled knob: euclidean pulses, repeats with pace, accents and grooves, chords and arps, phrases, scales",
+      "tags": ["Sequencer", "Clock generator", "Polyphonic", "Random"]
+    }
+  ]
+}
