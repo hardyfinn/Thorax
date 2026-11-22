@@ -32,3 +32,7 @@ The plugin is built for Apple Silicon Macs by GitHub Actions on every push
 
 - Panel: `python3 res/make_panel.py` (needs `fonttools`), preview `python3 tools/preview.py panel-preview.png`.
 - Engine check without Rack: `g++ -std=c++17 -I src tools/engine_test.cpp -o /tmp/et && /tmp/et`.
+
+## Licence
+
+MIT (see `LICENSE.txt`): you're free to use, change, port (VST/CLAP, other platforms, hardware) and share this code, as long as the copyright notice and licence text come along. Fonts on the panel (Inter, Climate Crisis) are under the SIL Open Font Licence.
